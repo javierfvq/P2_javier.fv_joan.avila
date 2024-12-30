@@ -94,8 +94,10 @@ public class Ex1Config implements Comparable <Ex1Config> {
     public double  cost(){
         return TotalTime;
     }
-    //Falta hacer el compareTo y la estimacion que llevara todo
 
+    private int estimacion(){
+        return 0;
+    }
 
 
 
