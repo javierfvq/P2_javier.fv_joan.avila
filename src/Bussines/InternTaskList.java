@@ -9,11 +9,18 @@ public class InternTaskList {
 
     private int TotalDifficulty;
 
+
     public InternTaskList(Intern intern) {
         this.intern = intern;
         this.tasks = new ArrayList<>();
         this.TotalDifficulty=0;
     }
+    public InternTaskList(InternTaskList that) {
+        this.intern = that.intern;
+        this.tasks = new ArrayList<>(that.tasks);
+        this.TotalDifficulty = that.TotalDifficulty;
+    }
+
     public Intern getIntern() {
         return intern;
     }

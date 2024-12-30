@@ -18,14 +18,20 @@ public class Ex1Config implements Comparable <Ex1Config> {
     private int level;
 
     public Ex1Config(){
-        InterTaskList=new ArrayList<>();
+        InterTaskList=GlobalsEx1.getInterTaskList();
+        TaskDone=new boolean[GlobalsEx1.getNumberOfTasks()];
         TotalTime=0;
         level=0;
     }
-    private Ex1Config(Ex1Config ex1Config){
-        InterTaskList=new ArrayList<>(ex1Config.InterTaskList);
-        TotalTime=ex1Config.TotalTime;
-        level=ex1Config.level;
+    private Ex1Config(Ex1Config that ){
+
+        this.InterTaskList = new ArrayList<>();
+        for (InternTaskList taskList : that.InterTaskList) {
+            this.InterTaskList.add(new InternTaskList(taskList));
+        }
+        this.TaskDone=that.TaskDone.clone();
+        this.TotalTime=that.TotalTime;
+        this.level=that.level;
     }
   private boolean  matchesWithTask(Task task,Intern intern ){
         String cadena=task.getName();
@@ -67,6 +73,7 @@ public class Ex1Config implements Comparable <Ex1Config> {
 
         return (task.getTime()/total_time)*80;
     }
+
     public List<Ex1Config> expandir(){
         List<Ex1Config> succesors=new ArrayList<>();
 
@@ -80,9 +87,10 @@ public class Ex1Config implements Comparable <Ex1Config> {
                         succesor.TaskDone[i]=true;
                         succesor.InterTaskList.get(j).addTask(GlobalsEx1.getTask(i));
                         succesor.InterTaskList.get(j).AddDificulty(GlobalsEx1.getTask(i).getDifficulty());
-                        succesors.add(succesor);
                         succesor.TotalTime+=CalculateTime(intern,GlobalsEx1.getTask(i));
                         succesor.level++;
+                        succesors.add(succesor);
+
                     }
                 }
             }
@@ -113,7 +121,6 @@ public class Ex1Config implements Comparable <Ex1Config> {
         }
         return TotalTime+estimacion;
     }
-
 
     public  int compareTo(Ex1Config that ) {
         return Double.compare(this.estimacion() , that.estimacion());
