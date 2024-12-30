@@ -70,18 +70,19 @@ public class Ex1Config implements Comparable <Ex1Config> {
     public List<Ex1Config> expandir(){
         List<Ex1Config> succesors=new ArrayList<>();
 
-        for(int level =0;level<GlobalsEx1.getNumberOfTasks();level ++){
-            if(!TaskDone[level]){
+        for(int i =0;i<GlobalsEx1.getNumberOfTasks();i ++){
+            if(!TaskDone[i]){
                 for(int j=0;j<GlobalsEx1.getNumberOfInterns();j++){
                     InternTaskList internTaskList = InterTaskList.get(j);
                     Intern intern =InterTaskList.get(j).getIntern();
-                    if((intern.isJunior() &&  internTaskList.getTotalDifficulty()+GlobalsEx1.getTask(level).getDifficulty()<40) || !intern.isJunior()){
+                    if((intern.isJunior() &&  internTaskList.getTotalDifficulty()+GlobalsEx1.getTask(i).getDifficulty()<40) || !intern.isJunior()){
                         Ex1Config succesor = new Ex1Config(this);
-                        succesor.TaskDone[level]=true;
-                        succesor.InterTaskList.get(j).addTask(GlobalsEx1.getTask(level));
-                        succesor.InterTaskList.get(j).AddDificulty(GlobalsEx1.getTask(level).getDifficulty());
+                        succesor.TaskDone[i]=true;
+                        succesor.InterTaskList.get(j).addTask(GlobalsEx1.getTask(i));
+                        succesor.InterTaskList.get(j).AddDificulty(GlobalsEx1.getTask(i).getDifficulty());
                         succesors.add(succesor);
-                        succesor.TotalTime+=succesor.TotalTime+CalculateTime(intern,GlobalsEx1.getTask(level));
+                        succesor.TotalTime+=CalculateTime(intern,GlobalsEx1.getTask(i));
+                        succesor.level++;
                     }
                 }
             }
@@ -95,14 +96,26 @@ public class Ex1Config implements Comparable <Ex1Config> {
         return TotalTime;
     }
 
-    private int estimacion(){
-        return 0;
+    private double estimacion(){
+        double estimacion=0;
+        for(int i =level;i<GlobalsEx1.getNumberOfTasks();i++){
+            double min=Double.MAX_VALUE;
+            for(int j=0;j<GlobalsEx1.getNumberOfInterns();j++){
+                Intern intern = InterTaskList.get(j).getIntern();
+                if((intern.isJunior() && InterTaskList.get(j).getTotalDifficulty()+GlobalsEx1.getTask(i).getDifficulty()<40) || !intern.isJunior()){
+                    double time=CalculateTime(intern,GlobalsEx1.getTask(i));
+                    if(time<min){
+                        min=time;
+                    }
+                }
+            }
+            estimacion+=min;
+        }
+        return TotalTime+estimacion;
     }
 
 
-
-
-    public  int compareTo(Ex1Config o) {
-        return 0;
+    public  int compareTo(Ex1Config that ) {
+        return Double.compare(this.estimacion() , that.estimacion());
     }
 }
