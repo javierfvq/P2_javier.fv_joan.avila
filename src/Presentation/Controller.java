@@ -6,6 +6,7 @@ import Bussines.Intern;
 import Bussines.Task;
 import Bussines.Manager;
 import Presentation.Enums.MenuOption;
+import Bussines.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -62,6 +63,10 @@ public class Controller {
                     case SHOW_DATA:
                         showData();
                         break;
+                    case BRANCH_AND_BOUND:
+                        System.out.println("Asignando tareas usando Branch and Bound en la tarea1");
+                        asignTaskBranchAnbBound();
+                        break;
                     case EXIT:
                         System.out.println("Saliendo...");
                         break;
@@ -96,6 +101,11 @@ public class Controller {
         for (Task task : tasks) {
             System.out.println("- " + task.getName());
         }
+    }
+    private void asignTaskBranchAnbBound(){
+        System.out.println("Asignando tareas usando Branch and Bound...");
+        Bussines.BranchBound.BranchBoundEx1.mainBranchBoundEx1(tasks,interns);
+
     }
 
 }

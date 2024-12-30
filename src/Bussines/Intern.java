@@ -3,8 +3,8 @@ package Bussines;
 public class Intern {
     private String  name;
     private String  subject;
-    private double  avgGrade;
-    private boolean isJunior;   // Si es junior (true) o senior (false)
+    private static  double  avgGrade;
+    private static  boolean isJunior;   // Si es junior (true) o senior (false)
 
     public Intern(String name, String subject, double avgGrade, boolean isJunior) {
         this.name = name;
@@ -21,11 +21,11 @@ public class Intern {
         return subject;
     }
 
-    public double getAvgGrade() {
+    public static double getAvgGrade() {
         return avgGrade;
     }
 
-    public boolean isJunior() {
+    public static  boolean isJunior() {
         return isJunior;
     }
 }

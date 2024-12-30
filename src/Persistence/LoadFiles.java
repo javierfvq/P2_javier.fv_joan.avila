@@ -9,8 +9,8 @@ import  java.nio.file.*;
 import  java.util.*;
 
 public class LoadFiles {
-    private static final String FILE_PATH_INTERNS = "src/files/PAED-2525-P2-Datasets.txt";
-    private static final String FILE_PATH_TASKS   = "src/files/PAED-2525-P2-Datasets.txt";
+    private static final String FILE_PATH_INTERNS = "src/files/PAED-2525-P2-Datasets/interns.paed";
+    private static final String FILE_PATH_TASKS   = "src/files/PAED-2525-P2-Datasets/tasks.paed";
 
     private static final int ATRIBUTES_PER_INTERN = 4;
     private static final int ATRIBUTES_PER_TASK   = 7;
