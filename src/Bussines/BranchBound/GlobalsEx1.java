@@ -17,7 +17,6 @@ public class GlobalsEx1 {
     private static List <Intern> InternList= new ArrayList<>();
 
     public static void  GlobalInit(List<Task> listTask, List<Intern> internList){
-       ;
         NumberOfTasks = listTask.size();
         numberOfInterns = internList.size();
 

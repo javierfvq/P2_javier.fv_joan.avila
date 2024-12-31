@@ -6,6 +6,7 @@ import java.util.List;
 public class InternTaskList {
     private Intern intern;
     private List<Task> tasks;
+    private double TotalTime;
 
     private int TotalDifficulty;
 
@@ -14,6 +15,7 @@ public class InternTaskList {
         this.intern = intern;
         this.tasks = new ArrayList<>();
         this.TotalDifficulty=0;
+        this.TotalTime=0;
     }
     public InternTaskList(InternTaskList that) {
         this.intern = that.intern;
@@ -32,13 +34,18 @@ public class InternTaskList {
         tasks.add(task);
 
     }
-
+    public void addTime(double time){
+        TotalTime+=time;
+    }
 
     public void AddDificulty(int dificulty){
         TotalDifficulty+=dificulty;
     }
     public int getTotalDifficulty() {
         return TotalDifficulty;
+    }
+    public double  getTotalTime() {
+        return  TotalTime;
     }
 
 }
