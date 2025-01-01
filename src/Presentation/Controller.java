@@ -92,34 +92,25 @@ public class Controller {
     private void assignTasksBacktracking() {
         System.out.println("Asignando tareas usando Backtracking...\n");
 
-        // Crear una instancia de BacktrackingEx1
+        // Crear instancia de BacktrackingEx1
         BacktrackingEx1 backtrackingSolver = new BacktrackingEx1();
 
-        // Crear la instancia del marcaje (estado del sistema)
-        Marking marking = new Marking();
-
-        // Crear la configuración inicial basada en las tareas y los becarios
+        // Crear configuración inicial (lista de tareas y becarios)
         List<InternTaskList> configuracion = new ArrayList<>();
         for (Intern intern : interns) {
-            configuracion.add(new InternTaskList(intern));
+            InternTaskList taskList = new InternTaskList(intern);
+            configuracion.add(taskList);
         }
 
-        // Ejecutar el algoritmo de backtracking
+        // Crear el estado inicial del marcado
+        Marking marking = new Marking();
+
+        // Llamar al método backtracking
         backtrackingSolver.backtracking(configuracion, 0, marking);
 
         // Obtener los resultados
         List<InternTaskList> resultado = backtrackingSolver.getInterTaskList();
-        double tiempoTotal = backtrackingSolver.getTotalTime();
-
-        // Imprimir el resultado
-        System.out.println("Tiempo total mínimo: " + tiempoTotal);
-        System.out.println("\n--- Asignación de tareas ---");
-        for (InternTaskList taskList : resultado) {
-            System.out.println("Becario: " + taskList.getIntern().getName());
-            for (Task task : taskList.getTasks()) {
-                System.out.println("  - Tarea: " + task.getName() + " (Edificio: " + task.getBuilding() + ")");
-            }
-        }
+        System.out.println("Resultados obtenidos. Tamaño: " + resultado.size());
     }
 
     private void showData() {
@@ -133,6 +124,7 @@ public class Controller {
             System.out.println("- " + task.getName());
         }
     }
+
     private void asignTaskBranchAnbBound(){
         System.out.println("Asignando tareas usando Branch and Bound...");
         Bussines.BranchBound.BranchBoundEx1.mainBranchBoundEx1(tasks,interns);

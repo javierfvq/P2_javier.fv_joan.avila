@@ -12,7 +12,7 @@ public class InternTaskList {
     public InternTaskList(Intern intern) {
         this.intern = intern;
         this.tasks = new ArrayList<>();
-        this.TotalDifficulty=0;
+        this.TotalDifficulty = 0;
     }
 
     public Intern getIntern() {

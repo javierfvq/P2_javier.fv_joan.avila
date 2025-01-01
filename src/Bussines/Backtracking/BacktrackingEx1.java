@@ -25,6 +25,8 @@ public class BacktrackingEx1 {
         if (nivel == configuracion.size()) {
             double currentTotalTime = calculateTotalTime();
 
+            System.out.println("currentTotalTime: " + currentTotalTime + ", TotalTime: " + TotalTime);
+
             // Poda basada en la mejor solución:
             // Si el tiempo total actual es menor que el mejor tiempo registrado,
             // actualizamos la mejor solución encontrada.
@@ -38,7 +40,12 @@ public class BacktrackingEx1 {
 
         for (InternTaskList taskList : configuracion) {
             Intern currentIntern = taskList.getIntern();
-            Task currentTask = taskList.getTasks().get(nivel); // Obtener la tarea actual según el nivel
+
+            if (taskList.getTasks().isEmpty() || nivel >= taskList.getTasks().size()) {
+                continue; // Pasar al siguiente becario si no hay tareas o el nivel está fuera de rango
+            }
+
+            Task currentTask = taskList.getTasks().get(nivel);
 
             // Marcaje:
             // Se asigna la tarea actual al becario actual y se actualiza el estado del sistema.
