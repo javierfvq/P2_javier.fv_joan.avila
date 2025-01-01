@@ -43,7 +43,7 @@ public class GlobalsEx1 {
     public static List<Intern> getInternList() {
         return InternList;
     }
-    public static List<Task> getTaskList() {
+    public  List<Task> getTaskList() {
         return TaskList;
     }
     public static List<InternTaskList> getInterTaskList() {

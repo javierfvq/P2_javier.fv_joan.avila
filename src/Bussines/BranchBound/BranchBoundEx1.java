@@ -32,15 +32,15 @@ public class BranchBoundEx1 {
             List<Ex1Config> succesor = config.expandir();
 
 
+
             for (Ex1Config successsor : succesor) {
 
                 if (successsor.esPlena()) {
                     if (successsor.cost() < millor) {
                         millor = successsor.cost();
-                        System.out.println(successsor);
 
                         millorConfig = successsor;
-                        System.out.printf("Nueva mejor solución: TotalTime: %.2f\n", millor);
+                        System.out.println("Nueva mejor solución es "+ millor);
 
                     }
                 } else {
@@ -51,16 +51,27 @@ public class BranchBoundEx1 {
             }
 
         }
+        System.out.println(" ");
         System.out.println("El mejor tiempo para realizar todas las tareas es : " + millor);
-
+        System.out.println(" ");
+        System.out.println("Reparticion de tareas para cada becario ");
         List<InternTaskList> lista_mejor_config=millorConfig.getInterTaskList();
-        for (InternTaskList internTaskList : lista_mejor_config) {
-            System.out.println(internTaskList.getIntern().getName());
-            List<Task > listTask=internTaskList.getTasks();
-            for (Task task : listTask) {
-                System.out.println(task.getName());
+        List <String> lista_building=millorConfig.getBuilding();
+        List <Integer> lista_total_difficulty=millorConfig.getTotalDifficulty();
+        for (int i = 0; i < lista_mejor_config.size(); i++) {
+            InternTaskList internTaskList = lista_mejor_config.get(i);
+            String building = lista_building.get(i);
+            int totalDifficulty = lista_total_difficulty.get(i);
 
+            System.out.println("Becario: " + internTaskList.getIntern().getName());
+            System.out.println("\tEdificio asignado: " + building);
+            System.out.println("\tDificultad total acumulada: " + totalDifficulty);
+            List<Task> listTask = internTaskList.getTasks();
+            for (Task task : listTask) {
+                System.out.println("\t\tTarea: " + task.getName());
             }
+
+            System.out.println(""); // Salto de línea para separar los becarios
         }
     }
 }
