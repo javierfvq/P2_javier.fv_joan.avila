@@ -75,6 +75,7 @@ public class Ex1Config implements Comparable <Ex1Config> {
 
         return (task.getTime()/total_time)*80;
     }
+  
     /* ANTIGUO METODO CON DOBLE BUCLE QUE NO FUNCIONABA MUY BIEN Y NO SEGUIA LA IDEA DEL ARBOL DEL BRANCH AND BOUND
     public List<Ex1Config> expandir(){
         List<Ex1Config> succesors=new ArrayList<>();
@@ -99,6 +100,7 @@ public class Ex1Config implements Comparable <Ex1Config> {
         }
         return succesors;
     }*/
+  
     public List <Ex1Config> expandir(){
         List<Ex1Config> succesors=new ArrayList<>();
         if(level<=GlobalsEx1.getNumberOfTasks() && !TaskDone[level]){
@@ -148,6 +150,7 @@ public class Ex1Config implements Comparable <Ex1Config> {
     public  int compareTo(Ex1Config that ) {
         return Double.compare(this.estimacion() , that.estimacion());
     }
+
     public  double getTotalTime() {
         return TotalTime;
     }

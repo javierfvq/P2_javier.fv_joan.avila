@@ -8,6 +8,9 @@ import Bussines.Manager;
 import Presentation.Enums.MenuOption;
 import Bussines.*;
 
+import Bussines.Backtracking.BacktrackingEx1;
+import Bussines.Backtracking.Marking;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -87,8 +90,27 @@ public class Controller {
     }
 
     private void assignTasksBacktracking() {
-        System.out.println("Asignando tareas usando Backtracking (no implementado aún).\n");
-        // Aquí iría la implementación del backtracking
+        System.out.println("Asignando tareas usando Backtracking...\n");
+
+        // Crear instancia de BacktrackingEx1
+        BacktrackingEx1 backtrackingSolver = new BacktrackingEx1();
+
+        // Crear configuración inicial (lista de tareas y becarios)
+        List<InternTaskList> configuracion = new ArrayList<>();
+        for (Intern intern : interns) {
+            InternTaskList taskList = new InternTaskList(intern);
+            configuracion.add(taskList);
+        }
+
+        // Crear el estado inicial del marcado
+        Marking marking = new Marking();
+
+        // Llamar al método backtracking
+        backtrackingSolver.backtracking(configuracion, 0, marking);
+
+        // Obtener los resultados
+        List<InternTaskList> resultado = backtrackingSolver.getInterTaskList();
+        System.out.println("Resultados obtenidos. Tamaño: " + resultado.size());
     }
 
     private void showData() {
@@ -102,10 +124,10 @@ public class Controller {
             System.out.println("- " + task.getName());
         }
     }
+
     private void asignTaskBranchAnbBound(){
         System.out.println("Asignando tareas usando Branch and Bound...");
         Bussines.BranchBound.BranchBoundEx1.mainBranchBoundEx1(tasks,interns);
-
     }
 
 }
