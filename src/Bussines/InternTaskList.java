@@ -14,9 +14,11 @@ public class InternTaskList {
         this.tasks = new ArrayList<>();
         this.TotalDifficulty=0;
     }
+
     public Intern getIntern() {
         return intern;
     }
+
     public List<Task> getTasks() {
         return tasks;
     }
@@ -25,7 +27,6 @@ public class InternTaskList {
         tasks.add(task);
 
     }
-
 
     public void AddDificulty(int dificulty){
         TotalDifficulty+=dificulty;

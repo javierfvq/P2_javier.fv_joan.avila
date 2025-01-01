@@ -8,6 +8,9 @@ import Bussines.Manager;
 import Presentation.Enums.MenuOption;
 import Bussines.*;
 
+import Bussines.Backtracking.BacktrackingEx1;
+import Bussines.Backtracking.Marking;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -87,8 +90,36 @@ public class Controller {
     }
 
     private void assignTasksBacktracking() {
-        System.out.println("Asignando tareas usando Backtracking (no implementado aún).\n");
-        // Aquí iría la implementación del backtracking
+        System.out.println("Asignando tareas usando Backtracking...\n");
+
+        // Crear una instancia de BacktrackingEx1
+        BacktrackingEx1 backtrackingSolver = new BacktrackingEx1();
+
+        // Crear la instancia del marcaje (estado del sistema)
+        Marking marking = new Marking();
+
+        // Crear la configuración inicial basada en las tareas y los becarios
+        List<InternTaskList> configuracion = new ArrayList<>();
+        for (Intern intern : interns) {
+            configuracion.add(new InternTaskList(intern));
+        }
+
+        // Ejecutar el algoritmo de backtracking
+        backtrackingSolver.backtracking(configuracion, 0, marking);
+
+        // Obtener los resultados
+        List<InternTaskList> resultado = backtrackingSolver.getInterTaskList();
+        double tiempoTotal = backtrackingSolver.getTotalTime();
+
+        // Imprimir el resultado
+        System.out.println("Tiempo total mínimo: " + tiempoTotal);
+        System.out.println("\n--- Asignación de tareas ---");
+        for (InternTaskList taskList : resultado) {
+            System.out.println("Becario: " + taskList.getIntern().getName());
+            for (Task task : taskList.getTasks()) {
+                System.out.println("  - Tarea: " + task.getName() + " (Edificio: " + task.getBuilding() + ")");
+            }
+        }
     }
 
     private void showData() {
@@ -105,7 +136,6 @@ public class Controller {
     private void asignTaskBranchAnbBound(){
         System.out.println("Asignando tareas usando Branch and Bound...");
         Bussines.BranchBound.BranchBoundEx1.mainBranchBoundEx1(tasks,interns);
-
     }
 
 }

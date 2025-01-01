@@ -32,11 +32,12 @@ public class GlobalsEx1 {
     public static int getNumberOfInterns() {
         return numberOfInterns;
     }
+
     public static int getNumberOfTasks() {
         return NumberOfTasks;
     }
+
     public static Task getTask(int i){
        return TaskList.get(i);
     }
 }
-
