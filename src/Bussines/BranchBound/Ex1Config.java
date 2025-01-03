@@ -40,6 +40,7 @@ public class Ex1Config implements Comparable <Ex1Config> {
             FirstTask.add(false);
         }
 
+
     }
     private Ex1Config(Ex1Config that ){
         this.InterTaskList = new ArrayList<>();
@@ -53,6 +54,8 @@ public class Ex1Config implements Comparable <Ex1Config> {
         this.TotalDifficulty = new ArrayList<>(that.TotalDifficulty);
         this.Building = new ArrayList<>(that.Building);
         this.FirstTask = new ArrayList<>(that.FirstTask);
+
+
 
     }
   private boolean  matchesWithTask(Task task,Intern intern ){
@@ -79,7 +82,7 @@ public class Ex1Config implements Comparable <Ex1Config> {
         }
 
         if(nota>=7 && nota<9){
-            BonificationAVG=nota *10*1.2;
+            BonificationAVG=nota*10*1.2;
 
         }
 
@@ -96,7 +99,7 @@ public class Ex1Config implements Comparable <Ex1Config> {
         }
         double  total_time=BonificationMatch+BonificationAVG+BonificationSecondYear;
 
-        return (task.getTime()/total_time)*80;
+        return ((task.getTime()/total_time)*80);
     }
     /* ANTIGUO METODO CON DOBLE BUCLE QUE NO FUNCIONABA MUY BIEN Y NO SEGUIA LA IDEA DEL ARBOL DEL BRANCH AND BOUND
     public List<Ex1Config> expandir(){
@@ -123,14 +126,16 @@ public class Ex1Config implements Comparable <Ex1Config> {
         return succesors;
     }*/
     public List <Ex1Config> expandir(){
+
+
+
         List<Ex1Config> succesors=new ArrayList<>();
         if(level<GlobalsEx1.getNumberOfTasks() && !TaskDone[level]){
-            for(int i=0 ; i<GlobalsEx1.getNumberOfInterns();i++){
+            for(int i=0 ; i<GlobalsEx1.getNumberOfInterns();i++){;
 
-                InternTaskList internTaskList = InterTaskList.get(i);
                 Intern intern =InterTaskList.get(i).getIntern();
                     if(!FirstTask.get(i)){
-                        if ((intern.isJunior() && TotalDifficulty.get(i) +GlobalsEx1.getTask(level).getDifficulty() < 40) || !intern.isJunior()){
+                        if ((intern.isJunior() && TotalDifficulty.get(i) + GlobalsEx1.getTask(level).getDifficulty() < 40) || !intern.isJunior()){
                             Ex1Config succesor = new Ex1Config(this);
                             succesor.TaskDone[level]=true;
                             succesor.TotalTime+=CalculateTime(intern,GlobalsEx1.getTask(level));
@@ -142,8 +147,9 @@ public class Ex1Config implements Comparable <Ex1Config> {
                             succesors.add(succesor);
                         }
 
+
                     }else{
-                        if(((intern.isJunior() && TotalDifficulty.get(i)+GlobalsEx1.getTask(level).getDifficulty()<40)|| !intern.isJunior()) && Building.get(i).equals(GlobalsEx1.getTask(level).getBuilding())){
+                        if((intern.isJunior() && TotalDifficulty.get(i) + GlobalsEx1.getTask(level).getDifficulty() < 40) && Building.get(i).equals(GlobalsEx1.getTask(level).getBuilding()) || !intern.isJunior() && Building.get(i).equals(GlobalsEx1.getTask(level).getBuilding())){
                             Ex1Config succesor = new Ex1Config(this);
                             succesor.TaskDone[level]=true;
                             succesor.TotalTime+=CalculateTime(intern,GlobalsEx1.getTask(level));
@@ -156,10 +162,10 @@ public class Ex1Config implements Comparable <Ex1Config> {
                     }
             }
         }
+
         return succesors;
     }
     public boolean esPlena(){
-
         return level==GlobalsEx1.getNumberOfTasks();
 
     }
@@ -167,24 +173,35 @@ public class Ex1Config implements Comparable <Ex1Config> {
         return TotalTime;
     }
 
-    private double estimacion(){
-        double estimacion=0;
-        for(int i =level;i<GlobalsEx1.getNumberOfTasks();i++){
-            double min=Double.MAX_VALUE;
-            for(int j=0;j<GlobalsEx1.getNumberOfInterns();j++){
+    private double estimacion() {
+        double estimacion = 0;
+        for (int i = level; i < GlobalsEx1.getNumberOfTasks(); i++) {
+            double min = Double.MAX_VALUE;
+            for (int j = 0; j < GlobalsEx1.getNumberOfInterns(); j++) {
                 Intern intern = GlobalsEx1.getInternList().get(j);
-                if(((intern.isJunior() &&  (TotalDifficulty.get(j)+GlobalsEx1.getTask(level).getDifficulty())<40)|| !intern.isJunior()) && Building.get(j).equals(GlobalsEx1.getTask(level).getBuilding())){
-                    double time=CalculateTime(intern,GlobalsEx1.getTask(i));
-                    if(time<min){
-                        min=time;
+                if (((intern.isJunior() && (TotalDifficulty.get(j) + GlobalsEx1.getTask(level).getDifficulty()) < 40) || !intern.isJunior()) && Building.get(j).equals(GlobalsEx1.getTask(level).getBuilding())) {
+                    double time = CalculateTime(intern, GlobalsEx1.getTask(i));
+                    if (time < min) {
+                        min = time;
                     }
                 }
             }
 
-            estimacion+=min;
+            estimacion += min;
         }
-        return TotalTime+estimacion;
+        return TotalTime + estimacion;
     }
+        /*
+    //Estimacion hecha en el mejor caso posible para asi poder hacer una estimacion mucho mas rapida,esto es suponiendo el caso ideal
+    public  double estimacion(){
+        double estimacion=0;
+        double maxBonificacion=10*10*1.5+20+10;
+        for(int i=level;i<GlobalsEx1.getNumberOfTasks();i++){
+                estimacion+= (GlobalsEx1.getTask(i).getTime()/maxBonificacion)*80;
+        }
+
+        return TotalTime+estimacion;
+    }*/
 
     public  int compareTo(Ex1Config that ) {
         return Double.compare(this.estimacion() , that.estimacion());
@@ -192,9 +209,7 @@ public class Ex1Config implements Comparable <Ex1Config> {
     public List<InternTaskList> getInterTaskList() {
         return InterTaskList;
     }
-    public double getTotalTime() {
-        return TotalTime;
-    }
+
     public List<Boolean> getFirstTask() {
         return FirstTask;
     }
@@ -204,5 +219,6 @@ public class Ex1Config implements Comparable <Ex1Config> {
     public List<Integer> getTotalDifficulty() {
         return TotalDifficulty;
     }
+
 
 }
