@@ -18,6 +18,7 @@ public class GlobalsEx1 {
 
     public static void  GlobalInit(List<Task> listTask, List<Intern> internList){
         NumberOfTasks = listTask.size();
+
         numberOfInterns = internList.size();
 
         for (Intern intern : internList) {
